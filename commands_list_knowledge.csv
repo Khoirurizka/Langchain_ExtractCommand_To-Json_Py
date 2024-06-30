@@ -1,0 +1,7 @@
+command,command_id,command_definition,param_0,param_0_definition,Param_1,Param_1_definition,Param_2,Param_2_definition,Param_3,Param_3_definition,Param_4,Param_4_definition,Param_5,Param_5_definition
+home,0,make robot go to initial position,-,-,-,-,-,-,-,-,-,-,-,-
+move_to_obj,1,make robot go to selected object,type(int),Id of selected object,-,-,-,-,-,-,-,-,-,-
+move_to_carts,2,"make robot go to position with cartesian coordinate (x,y,z,rx,ry,rz)",type(float),coordinate x,type(float),coordinate y,type(float),coordinate z,type(float),coordinate rx,type(float),coordinate ry,type(float),coordinate rz 
+retract,3,make robot retract with additional z value,type(float),Retract z value,-,-,-,-,-,-,-,-,-,-
+grab,4,make robot hand is close to grab some object,-,-,-,-,-,-,-,-,-,-,-,-
+release,5,make robot hand is open to release some object,-,-,-,-,-,-,-,-,-,-,-,-
