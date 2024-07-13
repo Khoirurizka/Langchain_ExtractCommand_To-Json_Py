@@ -18,6 +18,9 @@ from langchain_core.prompts import ChatPromptTemplate
 import re
 import json
 
+def json_str_to_dict(json_str):
+    return json.loads(json_str)
+
 save_res=False
 
 ### Get your API keys from openai, you will need to create an account. 
@@ -121,7 +124,7 @@ print("\nMathch:")
 commands_robot=""
 cmds_temp= [] 
 cmd_temp = {"command": "-", "argument_1": "-", "argument_2": "-", "argument_3": "-"}
-cmd_to_robot={"robot_type": "j2n6s300","robot_id": 0,"cmd":""}
+cmd_to_robot={"robot_type": "j2n6s300","robot_id": 0,"commands":""}
 
 if matches:
     # Extract the matched content
@@ -148,7 +151,7 @@ for i in range(len(commands_robot)):
                    Let we have total 3 cup, the most left has id 1 and most right has id 3. The ball is under cup 2. First position is most left position and third position is thelast position.\n
                    Use this rule\ncommand=0 for make robot go to initial position or homing, param1 to 3=-\ncommand=1 for make robot go to cup the grab the cup or show inside the cup or lift the cup, param1=type(int) is target cup id, param 2 to 3=-\ncommand=2 for make robot go to then put the cup, param1=type(int) is target cup id, param 2 to 3=-, command=3 for make robot retract on the above of cup, param1=type(int) is target cup id, param 2 to 3=-\n target cup is position that ask by question\n for return or put back choose same position as target cup that was choosen\n"""},
             {"role": "user", "content": "Pick Cup Two"},
-            {"role": "assistant", "content": """json_command_robot= {"robot_type": "j2n6s300",\n"robot_id": 0,\n"command": 1,\n"argument_1": "2",\n"argument_2": "-",\n"argument_3": "-"}"""},   
+            {"role": "assistant", "content": """json_command_robot= {"robot_type": "j2n6s300",\n"robot_id": "0",\n"command": "1",\n"argument_1": "2",\n"argument_2": "-",\n"argument_3": "-"}"""},   
 
             {"role": "user", "content": commands_robot[i]+", only answer using single json tempate\n json_command_robot={...}"}
         ]
@@ -168,12 +171,22 @@ for i in range(len(commands_robot)):
 
     # Print the result
     print(cmd_temp)
-    cmds_temp.append(cmd_temp)
+    json_cmd_temp = json.dumps(cmd_temp)
+    #print(json_cmd_temp)
+    cmds_temp.append(json_cmd_temp)
+    #print(cmds_temp)
     #print(response_b.choices[0].message.content+"\n")
 print("######################################################")
+# Print the list of dictionaries
 print(cmds_temp)
 print(len(cmds_temp))
 print("######################################################")
-cmd_to_robot["cmd"]=tuple(cmds_temp)
+# Convert each JSON-like string to dictionary
+dict_cmds_temp = [json_str_to_dict(json_str) for json_str in cmds_temp]
+print(dict_cmds_temp)
+print("######################################################")
+cmd_to_robot["commands"] = dict_cmds_temp
 print(cmd_to_robot)
-
+print("######################################################")
+json_cmd_to_robot = json.dumps(cmd_to_robot)
+print(json_cmd_to_robot)
