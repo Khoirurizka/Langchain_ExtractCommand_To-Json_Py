@@ -163,11 +163,11 @@ for i in range(len(commands_robot)):
     # Extract JSON strings
     json_robot_match = json_robot_pattern.search(response_b.choices[0].message.content)
     if json_robot_match:
-        _json_command_robot = json.loads(json_robot_match.group(1))
-        cmd_temp["command"] = _json_command_robot.get('command', "")
-        cmd_temp["argument_1"]  = _json_command_robot.get('argument_1', "")
-        cmd_temp["argument_2"]  = _json_command_robot.get('argument_2', "")
-        cmd_temp["argument_3"]  = _json_command_robot.get('argument_3', "")
+        json_command_robot = json.loads(json_robot_match.group(1))
+        cmd_temp["command"] = json_command_robot.get('command', "")
+        cmd_temp["argument_1"]  = json_command_robot.get('argument_1', "")
+        cmd_temp["argument_2"]  = json_command_robot.get('argument_2', "")
+        cmd_temp["argument_3"]  = json_command_robot.get('argument_3', "")
 
     # Print the result
     print(cmd_temp)
